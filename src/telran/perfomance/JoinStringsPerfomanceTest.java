@@ -1,0 +1,33 @@
+package telran.perfomance;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class JoinStringsPerfomanceTest extends PerfomanceTest {
+protected String [] strings;
+protected JoinStrings joinStrings;
+	public JoinStringsPerfomanceTest(String testName, int nRuns, String [] strings, JoinStrings joinStrings) {
+		
+		super(testName, nRuns);
+		this.strings = strings;
+		this.joinStrings = joinStrings;
+	}
+
+	@BeforeEach
+	void setUp() throws Exception {
+	}
+
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+
+	@Override
+	protected void runTest() {
+		joinStrings.join(strings, " ");
+		
+	}
+
+}
