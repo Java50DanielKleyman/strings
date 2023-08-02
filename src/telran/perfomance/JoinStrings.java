@@ -2,6 +2,6 @@ package telran.perfomance;
 
 public interface JoinStrings {
 
-	void join();
+	String join(String[] strings, String delimeter);
 
 }

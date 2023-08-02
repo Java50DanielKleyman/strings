@@ -17,8 +17,8 @@ public abstract class PerfomanceTest {
 			runTest();
 		}
 		long endTime = System.currentTimeMillis();
-		float runningTime = (endTime - startTime) * 1000;
+		float runningTime = (endTime - startTime);
 		System.out.println(
-				"nRuns: " + nRuns + ";" + "testName: " + testName + ";" + "running time sec: " + runningTime + ";");
+				"nRuns: " + nRuns + "; " + "testName: " + testName + "; " + "running time millsec: " + runningTime + ";");
 	}
 }

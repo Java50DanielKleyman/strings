@@ -18,15 +18,10 @@ protected JoinStrings joinStrings;
 	@BeforeEach
 	void setUp() throws Exception {
 	}
-
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Override
 	protected void runTest() {
-		joinStrings.join(strings, " ");
+		joinStrings.join(strings, "-");
 		
 	}
 
