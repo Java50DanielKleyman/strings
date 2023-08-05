@@ -25,7 +25,7 @@ public class Strings {
 		String regexOperator = operator();
 
 //	return  "^\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*[+\\-*/]\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*))*\\s*$";
-	return String.format("^\\s*(%s)(\\s*%s\\s*(%s))*\\s*$", regexOperand, regexOperator, regexOperand);
+	return String.format("^\\s*(%1$s)(\\s*%2$s\\s*(%1$s))*\\s*$", regexOperand, regexOperator);
 	}
 
 	private static String operator() {
