@@ -100,7 +100,7 @@ class StringsTest {
 	void
 	arithmeticExpressionTrueTest() {
 	String regex = arithmeticExpression();
-	assertTrue(" a+.5/ucQ*q - 100. ".matches(regex));
+	assertTrue("20.0* a+.5/ucQ*q - 100. ".matches(regex));
 	assertTrue("1.5 + a/2*10 -21"	.matches(regex));
 	assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
 	assertTrue("5. + __/2* 0.0 /0 "	.matches(regex));
@@ -114,8 +114,8 @@ class StringsTest {
 	String regex = arithmeticExpression();
 	assertFalse("1.5 # a/2*10-21".matches(regex));
 	assertFalse(".5 + $ 1/2* 10.0 /21.1234".matches(regex));
-	assertFalse("5. + _/2* 0.0 /0".matches(regex));
 	assertFalse("25 .".matches(regex));
+	assertFalse("5. + _/2* 0.0 /0".matches(regex));	
 	assertFalse("aA123*".matches(regex));
 	assertFalse(" + a * b".matches(regex));
 	}

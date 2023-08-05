@@ -23,20 +23,19 @@ public class Strings {
 	public static String arithmeticExpression() {
 		String regexOperand = operand();
 		String regexOperator = operator();
-//		return String.format("%s(\\s*%s\\s*%s)*", regexOperand, regexOperator, regexOperand);
-//		return  "^\\s*(\\d+(\\.\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*[+\\-*/](\\d+(\\.\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*))*\\s*$";
-	return  "^\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*[+\\-*/]\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*))*\\s*$";
-	
+
+//	return  "^\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*[+\\-*/]\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*))*\\s*$";
+	return String.format("^\\s*(%s)(\\s*%s\\s*(%s))*\\s*$", regexOperand, regexOperator, regexOperand);
 	}
 
 	private static String operator() {
-//		return "((\\+)|(\\-)|(\\*)|(\\/))";
+
 		 return "[+\\-*/]";
 		
 	}
 
 	private static String operand() {
-		 return "(?:\\d+(?:\\.\\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)";
-	//	return "(\\d+\\.\\d+|\\d+|\\w+)";
+		 return "((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)";
+	
 	}
 }
