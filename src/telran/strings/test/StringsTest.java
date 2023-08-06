@@ -103,8 +103,8 @@ class StringsTest {
 	assertTrue("20.0* a+.5/ucQ*q - 100. ".matches(regex));
 	assertTrue("1.5 + a/2*10 -21"	.matches(regex));
 	assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
-	assertTrue("5. + __/2* 0.0 /0 "	.matches(regex));
 	assertTrue("25.".matches(regex));
+	assertTrue("5. + __/2* 0.0 /0 "	.matches(regex));
 	assertTrue(" aA123 ".matches(regex));
 	}
 	

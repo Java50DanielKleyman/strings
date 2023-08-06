@@ -35,7 +35,7 @@ public class Strings {
 	}
 
 	private static String operand() {
-		 return "((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)";
+		 return "((\\d+)?(\\.)?(\\d+)?|[\\w$][\\w$]*)";
 	
 	}
 }
