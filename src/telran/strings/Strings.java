@@ -35,7 +35,7 @@ public class Strings {
 	}
 
 	private static String operand() {
-		 return "((\\d+)?(\\.)?(\\d+)?|[\\w$][\\w$]*)";
-	
+	//	 return "((\\d+)?(\\.)?(\\d+)?)|([\\w$][\\w$]*)";
+		return "(\\d+\\.?\\d*|\\.\\d+)|([\\w$][\\w$]*|_[\\w$])";
 	}
 }
