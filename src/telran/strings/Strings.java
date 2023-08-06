@@ -28,11 +28,11 @@ public class Strings {
 	}
 
 	private static String operator() {
-		 return "[+\\-*/]";
+		 return "[-+*/]";
 		
 	}
 
 	private static String operand() {	
-		return "(\\d+\\.?\\d*|\\.\\d+)|([\\w$]+)";
+		return "\\d+\\.?\\d*|\\.\\d+|[a-zA-Z$][\\w$]*|[_][\\w$]+";
 	}
 }
