@@ -118,7 +118,7 @@ class StringsTest {
 	assertFalse("25 .".matches(regex));		
 	assertFalse("aA123*".matches(regex));
 	assertFalse(" + a * b".matches(regex));
-	assertFalse("5. + _/2* 0.0 /0".matches(regex));	
+	assertFalse("5. + _a/2* 0.0 /0".matches(regex));	
 	}
 
 }
