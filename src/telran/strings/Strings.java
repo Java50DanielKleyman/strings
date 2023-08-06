@@ -24,18 +24,15 @@ public class Strings {
 		String regexOperand = operand();
 		String regexOperator = operator();
 
-//	return  "^\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*)(\\s*[+\\-*/]\\s*((\\d+)?(\\.)?(\\d+)?|[a-zA-Z_$][a-zA-Z0-9_$]*))*\\s*$";
 	return String.format("^\\s*(%1$s)(\\s*%2$s\\s*(%1$s))*\\s*$", regexOperand, regexOperator);
 	}
 
 	private static String operator() {
-
 		 return "[+\\-*/]";
 		
 	}
 
-	private static String operand() {
-	//	 return "((\\d+)?(\\.)?(\\d+)?)|([\\w$][\\w$]*)";
+	private static String operand() {	
 		return "(\\d+\\.?\\d*|\\.\\d+)|([\\w$]+)";
 	}
 }

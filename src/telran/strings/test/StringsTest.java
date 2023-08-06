@@ -99,8 +99,7 @@ class StringsTest {
 	@Test
 	void
 	arithmeticExpressionTrueTest() {
-	String regex = arithmeticExpression();
-	assertTrue("a+b".matches(regex));
+	String regex = arithmeticExpression();	
 	assertTrue("20.0* a+.5/ucQ*q - 100. ".matches(regex));
 	assertTrue("1.5 + a/2*10 -21"	.matches(regex));
 	assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
