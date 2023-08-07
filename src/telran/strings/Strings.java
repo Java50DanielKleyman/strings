@@ -24,7 +24,7 @@ public class Strings {
 		String regexOperand = operand();
 		String regexOperator = operator();
 
-	return String.format("^\\s*(%1$s)(\\s*%2$s\\s*(%1$s))*\\s*$", regexOperand, regexOperator);
+	return String.format("^\\s?(%1$s)(\\s?%2$s\\s?(%1$s))*\\s?$", regexOperand, regexOperator);
 	}
 
 	private static String operator() {
