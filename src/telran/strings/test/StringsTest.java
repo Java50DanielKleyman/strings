@@ -23,11 +23,24 @@ class StringsTest {
 		assertEquals(6, calculation("3 + (5 - 2)", mapOperands));
 		assertEquals(80, calculation(" 10*8 ", mapOperands));
 		assertEquals(2.5, calculation(" b + a ", mapOperands));
-		assertEquals(13.0, calculation(" 15.5 -c ", mapOperands));
+		assertEquals(-.5, calculation(" 15.5 -c -13.5 ", mapOperands));
 		assertEquals(6.0, calculation("d/ a ", mapOperands));
 		assertEquals(2.0, calculation("c/ (1 -a)  ", mapOperands));
+		assertEquals(1.0, calculation(" a + b - c * d /2  + 1", mapOperands));
+		assertEquals(Double.POSITIVE_INFINITY, calculation("d /0  ", mapOperands));
 	}
-
+	@Test
+	void calculationTrueFalse() {
+		assertThrows(IllegalArgumentException.class, () -> calculation("3 + ((5 - 2)", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation("3 + (5 - 2))", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation("3 + )5 - 2)", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation(" b + $ ", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation(" w * a ", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation(" _ * d ", mapOperands));
+		assertThrows(IllegalArgumentException.class, () -> calculation("   /a ", mapOperands));
+	}
+	
+	
 	@SuppressWarnings("unused")
 	@Test
 	void javaVariableTrueTest() {
