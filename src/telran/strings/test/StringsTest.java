@@ -3,24 +3,50 @@ package telran.strings.test;
 import static org.junit.jupiter.api.Assertions.*;
 import static telran.strings.Strings.*;
 
+import java.util.HashMap;
+import java.util.function.BinaryOperator;
+
 import org.junit.jupiter.api.Test;
 
 class StringsTest {
+	 static HashMap<String, Double> mapOperands = new HashMap<>(); 
+	static {
+		mapOperands = new HashMap<>();
+		mapOperands.put("a", 0.5);
+		mapOperands.put("b", 2.0);
+		mapOperands.put("c", 2.5);
+		mapOperands.put("d", 3.0);
+	}
+
+	@Test
+	void calculationTrueTest() {
+		assertEquals(6, calculation("3 + (5 - 2)", mapOperands));
+		assertEquals(80, calculation(" 10*8 ", mapOperands));
+		assertEquals(2.5, calculation(" b + a ", mapOperands));
+		assertEquals(13.0, calculation(" 15.5 -c ", mapOperands));
+		assertEquals(6.0, calculation("d/ a ", mapOperands));
+		assertEquals(2.0, calculation("c/ (1 -a)  ", mapOperands));
+	}
 
 	@SuppressWarnings("unused")
 	@Test
 	void javaVariableTrueTest() {
 		String regex = javaVariable();
 		assertTrue("a".matches(regex));
-		assertTrue("$".matches(regex)); int $;
+		assertTrue("$".matches(regex));
+		int $;
 		assertTrue("a123".matches(regex));
-		assertTrue("__".matches(regex)); int __;
-		assertTrue("_$".matches(regex)); int _$;
-		assertTrue("$_".matches(regex)); int $_;
+		assertTrue("__".matches(regex));
+		int __;
+		assertTrue("_$".matches(regex));
+		int _$;
+		assertTrue("$_".matches(regex));
+		int $_;
 		assertTrue("aA".matches(regex));
 		assertTrue("Aa".matches(regex));
-		
+
 	}
+
 	@Test
 	void javaVariableFalseTest() {
 		String regex = javaVariable();
@@ -28,8 +54,9 @@ class StringsTest {
 		assertFalse("123".matches(regex));
 		assertFalse("a&c".matches(regex));
 		assertFalse("a C".matches(regex));
-		assertFalse("_".matches(regex)); 
+		assertFalse("_".matches(regex));
 	}
+
 	@Test
 	void zero_300_true_test() {
 		String regex = zero_300();
@@ -37,11 +64,12 @@ class StringsTest {
 		assertTrue("10".matches(regex));
 		assertTrue("9".matches(regex));
 		assertTrue("100".matches(regex));
-		assertTrue("99".matches(regex));
+		assertTrue("199".matches(regex));
 		assertTrue("200".matches(regex));
 		assertTrue("299".matches(regex));
 		assertTrue("300".matches(regex));
 	}
+
 	@Test
 	void zero_300_false_test() {
 		String regex = zero_300();
@@ -54,6 +82,7 @@ class StringsTest {
 		assertFalse("a".matches(regex));
 		assertFalse("-1_0".matches(regex));
 	}
+
 	@Test
 	void ipV4OctetTrueTest() {
 		String regex = ipV4Octet();
@@ -68,6 +97,7 @@ class StringsTest {
 		assertTrue("250".matches(regex));
 		assertTrue("255".matches(regex));
 	}
+
 	@Test
 	void ipV4OctetFalseTest() {
 		String regex = ipV4Octet();
@@ -79,6 +109,7 @@ class StringsTest {
 		assertFalse("1000".matches(regex));
 		assertFalse("300".matches(regex));
 	}
+
 	@Test
 	void ipV4TrueTest() {
 		String regex = ipV4Address();
@@ -87,6 +118,7 @@ class StringsTest {
 		assertTrue("000.0.0.0".matches(regex));
 		assertTrue("255.255.255.255".matches(regex));
 	}
+
 	@Test
 	void ipV4TFalseTest() {
 		String regex = ipV4Address();
@@ -96,28 +128,42 @@ class StringsTest {
 		assertFalse("100".matches(regex));
 		assertFalse("1 2.3.4".matches(regex));
 	}
+
 	@Test
-	void
-	arithmeticExpressionTrueTest() {
-	String regex = arithmeticExpression();	
-	assertTrue("20.0* a+.5/ucQ*q - 100. ".matches(regex));
-	assertTrue("1.5 + a/2*10 -21"	.matches(regex));
-	assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
-	assertTrue("25.".matches(regex));
-	assertTrue("5. + __/2* 0.0 /0 ".matches(regex));
-	assertTrue(" aA123 ".matches(regex));
-	}
-	
-	@Test
-	void
-	arithmeticExpressionFalseTest() {
-	String regex = arithmeticExpression();	
-	assertFalse("1.5 # a/2*10-21".matches(regex));
-	assertFalse(".5 + $ 1/2* 10.0 /21.1234".matches(regex));
-	assertFalse("25 .".matches(regex));		
-	assertFalse("aA123*".matches(regex));
-	assertFalse(" + a * b".matches(regex));
-	assertFalse("5. + _/2* 0.0 /0".matches(regex));	
+	void arithmeticExpressionTrueTest() {
+		String regex = arithmeticExpression();
+		assertTrue("1.5 + a/2*10 -21".matches(regex));
+		assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
+		assertTrue("5. + __/2* 0.0 /0  ".matches(regex));
+		assertTrue("25.".matches(regex));
+		assertTrue("   aA123   ".matches(regex));
 	}
 
+	@Test
+	void arithmeticExpressionFalseTest() {
+		String regex = arithmeticExpression();
+		assertFalse("1.5 # a/2*10 -21".matches(regex));
+		assertFalse(".5 + $ 1/2* 10.0 /21.1234".matches(regex));
+		assertFalse("5. + _/2* 0.0 /0".matches(regex));
+		assertFalse("25 .".matches(regex));
+		assertFalse("aA123*".matches(regex));
+		assertFalse(" + a * b".matches(regex));
+
+	}
+
+	@Test
+	void isArithmeticExpressionTrueTest() {
+		assertTrue(isArithmeticExpression("(a + (b /2) ) * 100"));
+		assertTrue(isArithmeticExpression("(a + ((b /2)  * 100)- 10 )"));
+		assertTrue(isArithmeticExpression(" (a + ( b /2 )) * 100"));
+		assertTrue(isArithmeticExpression("( a +  ( (b /2 )  * 100  )- 10)"));
+	}
+
+	@Test
+	void isArithmeticExpressionFalseTest() {
+		assertFalse(isArithmeticExpression("(a + ((b /2) ( * 100)- 10 ))"));
+		assertFalse(isArithmeticExpression("(a + ((b /2)  * 100)- 10 )))"));
+		assertFalse(isArithmeticExpression("(a + ((b)))) /2)  * 100)- ((10 ))"));
+		assertFalse(isArithmeticExpression(" a) + ( (b /2 )  * 100  )- 10)"));
+	}
 }

@@ -1,6 +1,20 @@
 package telran.strings;
 
+import java.util.*;
+import java.util.function.BinaryOperator;
+
 public class Strings {
+	public static final String WRONG_EXPRESSION = "Wrong arithmetic expresion syntax";
+	public static final String VARIABLE_NOT_DEFINED = "Variable is not defined";
+	public static HashMap<String, BinaryOperator<Double>> mapOperations;
+	static {
+		mapOperations = new HashMap<>();
+		mapOperations.put("+", (a, b) -> a + b);
+		mapOperations.put("-", (a, b) -> a - b);
+		mapOperations.put("*", (a, b) -> a * b);
+		mapOperations.put("/", (a, b) -> a / b);
+	}
+
 	static public String javaVariable() {
 
 		return "[a-zA-Z$][\\w$]*|_[\\w$]+";
@@ -21,18 +35,88 @@ public class Strings {
 	}
 
 	public static String arithmeticExpression() {
-		String regexOperand = operand();
-		String regexOperator = operator();
-
-	return String.format("^\\s?(%1$s)(\\s?%2$s\\s?(%1$s))*\\s?$", regexOperand, regexOperator);
+		String operandRE = operand();
+		String operatorRE = operator();
+		return String.format("%1$s(%2$s%1$s)*", operandRE, operatorRE);
 	}
 
-	private static String operator() {
-		 return "[-+*/]";
-		
+	public static String operator() {
+		return "([-+*/])";
 	}
 
-	private static String operand() {	
-		return "\\d+\\.?\\d*|\\.\\d+|[a-zA-Z$][\\w$]*|[_][\\w$]+";
+	private static String operand() {
+		String numberExp = numberExp();
+		String variableExp = javaVariable();
+		return String.format("(\\s*\\(*\\s*)*((%s|%s))(\\s*\\)*\\s*)*", numberExp, variableExp);
+	}
+
+	private static String numberExp() {
+
+		return "(\\d+\\.?\\d*|\\.\\d+)";
+	}
+
+	public static boolean isArithmeticExpression(String expression) {
+		boolean res = false;
+		if (bracketPairsValidation(expression)) {
+			res = expression.matches(arithmeticExpression());
+		}
+		return res;
+	}
+
+	private static boolean bracketPairsValidation(String expression) {
+		boolean res = true;
+		int count = 0;
+		char[] chars = expression.toCharArray();
+		int index = 0;
+		while (index < chars.length && res) {
+			if (chars[index] == '(') {
+				count++;
+			} else if (chars[index] == ')') {
+				count--;
+				if (count < 0) {
+					res = false;
+				}
+			}
+			index++;
+		}
+		if (res) {
+			res = count == 0;
+		}
+		return res;
+	}
+
+	public static double calculation(String expression, Map<String, Double> variableValues) {
+		if (!isArithmeticExpression(expression)) {
+			throw new IllegalArgumentException(WRONG_EXPRESSION);
+		}
+		expression = expression.replaceAll("[()\\s]+", ""); // removing brackets and spaces
+		String[] operators = expression.split(operand());
+		String[] operands = expression.split(operator());
+		double res = getValue(operands[0], variableValues);
+		for (int i = 1; i < operands.length; i++) {
+			double operand = getValue(operands[i], variableValues);
+			res = mapOperations.get(operators[i]).apply(res, operand);
+		}
+
+		return res;
+	}
+
+	private static double getValue(String operand, Map<String, Double> variableValues) {
+
+		Double res;
+		try {
+			res = Double.parseDouble(operand);
+		} catch (NumberFormatException e) {
+			res = variableValues.get(operand);
+			if (res == null) {
+				throw new IllegalArgumentException("Variable value not found");
+			}
+
+		}
+		// double res ; //if operand is number then res will be
+		// Double.parseDouble(operand) otherwise the value should be got from the map
+		// if the operand is a variable and a value doesn't exist in the map the
+		// IllegalArgumentException should be thrown
+		return res;
 	}
 }
